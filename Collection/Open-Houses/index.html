@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+  <h3>TCBG GALLERY</h3>
+    <script>
+		const urlParams = new URLSearchParams(window.location.search);
+		const currentAlbum = urlParams.get('currentAlbum') ?? "2023-Open-House";
+    const currentPhoto = urlParams.get('currentPhoto') ?? "001";
+		document.addEventListener('keydown', function(event) {
+			//left
+			if(event.keyCode == 37) {
+        window.open("../Computational-Facility/index.html", "_top");
+			}
+			//right
+			else if(event.keyCode == 39) {
+        window.open("../TCB-Office-Areas/index.html", "_top");
+			}
+			//up
+			else if (event.keyCode == 38) {
+				window.open(`../index.html?currentCollection=Open-Houses&currentAlbum=${currentAlbum}&currentPhoto=${currentPhoto}`, "_top");
+			}
+			//down
+			else if (event.keyCode == 40) {
+				let address = `${currentAlbum}/index.html?currentPhoto=${currentPhoto}`;
+				window.open(address, "_top");
+			}
+		});
+	</script>
+	<table cellpadding="0" cellspacing="0" width="99%">
+		<tr valign='center'>
+			<td width="40%">
+					<a href='../Computational-Facility/index.html'>(Prev) Computational-Facility</a>
+			</td>
+
+			<td width="40%" valign=center>
+				
+				<h3 style="margin: 0;">
+					Navigation: <b><a href='../index.html'>Collection</a>/Open-Houses</b>
+        </h3>
+			</td>
+
+			<td width="25%" valign=center style="text-align: right;">
+				<a href='../TCB-Office-Areas/index.html'>TCB-Office-Areas (Next)</a>
+			</td>
+		</tr>
+	</table>
+	<table width="99%">
+				<tr>
+		<td style="text-align:center" valign='top' width='20%'>
+			<a class='clear' href='2023-Open-House/index.html'>
+				<img src='2023-Open-House/001/2023-Open-House-small.jpg' border='0' width='150' height='100'/><br/>
+				2023-Open-House
+			</a><br/>
+			<p style="font-size: 75%; margin-top: 0;">11 images<br/>30 Apr-1 May 2023</p>
+		</td>
+		<td style="text-align:center" valign='top' width='20%'>
+			<a class='clear' href='2003-Open-House/index.html'>
+				<img src='2003-Open-House/001/2003-Open-House-small.jpg' border='0' width='150' height='100'/><br/>
+				2003-Open-House
+			</a><br/>
+			<p style="font-size: 75%; margin-top: 0;">8 images<br/>14 Apr 2003</p>
+		</td>
+		<td style="text-align:center" valign='top' width='20%'>
+			<a class='clear' href='2002-Open-House/index.html'>
+				<img src='2002-Open-House/001/2002-Open-House-small.jpg' border='0' width='150' height='100'/><br/>
+				2002-Open-House
+			</a><br/>
+			<p style="font-size: 75%; margin-top: 0;">2 images<br/></p>
+		</td>
+		<td style="text-align:center" valign='top' width='20%'>
+			<a class='clear' href='2001-Open-House/index.html'>
+				<img src='2001-Open-House/001/2001-Open-House-small.jpg' border='0' width='150' height='100'/><br/>
+				2001-Open-House
+			</a><br/>
+			<p style="font-size: 75%; margin-top: 0;">7 images<br/></p>
+		</td>
+		<td style="text-align:center" valign='top' width='20%'>
+			<a class='clear' href='2000-Open-House/index.html'>
+				<img src='2000-Open-House/001/2000-Open-House-small.jpg' border='0' width='150' height='100'/><br/>
+				2000-Open-House
+			</a><br/>
+			<p style="font-size: 75%; margin-top: 0;">4 images<br/></p>
+		</td>
+
+  </table>
+</body>
+
+</html>

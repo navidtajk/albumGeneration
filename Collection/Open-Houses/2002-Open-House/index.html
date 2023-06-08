@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+  <h3>TCBG GALLERY</h3>
+  	<script>
+		const urlParams = new URLSearchParams(window.location.search);
+		const currentPhoto = urlParams.get('currentPhoto') ?? "001";
+		document.addEventListener('keydown', function(event) {
+			//left
+			if(event.keyCode == 37) {
+				window.open("../2003-Open-House/index.html", "_top");
+			} 
+			//right
+			else if(event.keyCode == 39) {
+				window.open("../2001-Open-House/index.html", "_top");
+			}
+			//up
+			else if (event.keyCode == 38) {
+				window.open(`../index.html?currentAlbum=2002-Open-House&currentPhoto=${currentPhoto}`, "_top");
+			}
+			//down
+			else if (event.keyCode == 40) {
+				let address = `${currentPhoto}/index.html`
+				window.open(address, "_top");
+			}
+		});
+	</script>
+	<table cellpadding="0" cellspacing="0" width="99%">
+		<tr valign='center'>
+			<td width="40%">
+					<a href='../2003-Open-House/index.html'>(Prev) 2003-Open-House</a>
+			</td>
+
+			<td width="40%" valign=center>
+				
+				<h3 style="margin: 0;">
+					Navigation: <b><a href='../../index.html'>Collection</a>/<a href='../index.html'>Open-Houses</a>/2002-Open-House</b>
+				</h3>
+			</td>
+
+			<td width="25%" valign=center style="text-align: right;">
+				<a href='../2001-Open-House/index.html'>2001-Open-House (Next)</a>
+			</td>
+		</tr>
+	</table>
+	<table width="99%">
+		<tr>
+		<td style="text-align:center" valign='top' width='20%'>
+			<a class='clear' href='001/index.html'>
+				<img src='001/2002-Open-House-small.jpg' border='0' width='150' height='100'/><br/>
+				001
+			</a>
+		</td>
+
+  </table>
+</body>
+
+</html>

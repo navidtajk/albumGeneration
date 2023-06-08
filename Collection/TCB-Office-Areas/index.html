@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+  <h3>TCBG GALLERY</h3>
+    <script>
+		const urlParams = new URLSearchParams(window.location.search);
+		const currentAlbum = urlParams.get('currentAlbum') ?? "Office-Areas";
+    const currentPhoto = urlParams.get('currentPhoto') ?? "001";
+		document.addEventListener('keydown', function(event) {
+			//left
+			if(event.keyCode == 37) {
+        window.open("../Open-Houses/index.html", "_top");
+			}
+			//right
+			else if(event.keyCode == 39) {
+        window.open("../Computational-Facility/index.html", "_top");
+			}
+			//up
+			else if (event.keyCode == 38) {
+				window.open(`../index.html?currentCollection=TCB-Office-Areas&currentAlbum=${currentAlbum}&currentPhoto=${currentPhoto}`, "_top");
+			}
+			//down
+			else if (event.keyCode == 40) {
+				let address = `${currentAlbum}/index.html?currentPhoto=${currentPhoto}`;
+				window.open(address, "_top");
+			}
+		});
+	</script>
+	<table cellpadding="0" cellspacing="0" width="99%">
+		<tr valign='center'>
+			<td width="40%">
+					<a href='../Open-Houses/index.html'>(Prev) Open-Houses</a>
+			</td>
+
+			<td width="40%" valign=center>
+				
+				<h3 style="margin: 0;">
+					Navigation: <b><a href='../index.html'>Collection</a>/TCB-Office-Areas</b>
+        </h3>
+			</td>
+
+			<td width="25%" valign=center style="text-align: right;">
+				<a href='../Computational-Facility/index.html'>Computational-Facility (Next)</a>
+			</td>
+		</tr>
+	</table>
+	<table width="99%">
+				<tr>
+		<td style="text-align:center" valign='top' width='20%'>
+			<a class='clear' href='Office-Areas/index.html'>
+				<img src='Office-Areas/001/Office-Areas-small.jpg' border='0' width='150' height='100'/><br/>
+				Office-Areas
+			</a><br/>
+			<p style="font-size: 75%; margin-top: 0;">27 images<br/>11 Dec 2013</p>
+		</td>
+		<td style="text-align:center" valign='top' width='20%'>
+			<a class='clear' href='Innovation-Area-II-Computers/index.html'>
+				<img src='Innovation-Area-II-Computers/001/Innovation-Area-II-Computers-small.jpg' border='0' width='150' height='100'/><br/>
+				Innovation-Area-II-Computers
+			</a><br/>
+			<p style="font-size: 75%; margin-top: 0;">12 images<br/>11 Dec 2013</p>
+		</td>
+		<td style="text-align:center" valign='top' width='20%'>
+			<a class='clear' href='3035-Meeting-Room/index.html'>
+				<img src='3035-Meeting-Room/001/3035-Meeting-Room-small.jpg' border='0' width='150' height='100'/><br/>
+				3035-Meeting-Room
+			</a><br/>
+			<p style="font-size: 75%; margin-top: 0;">12 images<br/>22 Mar-8 Jun 2012</p>
+		</td>
+
+  </table>
+</body>
+
+</html>

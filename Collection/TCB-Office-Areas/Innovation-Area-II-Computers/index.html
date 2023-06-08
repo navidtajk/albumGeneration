@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+  <h3>TCBG GALLERY</h3>
+  	<script>
+		const urlParams = new URLSearchParams(window.location.search);
+		const currentPhoto = urlParams.get('currentPhoto') ?? "001";
+		document.addEventListener('keydown', function(event) {
+			//left
+			if(event.keyCode == 37) {
+				window.open("../Office-Areas/index.html", "_top");
+			} 
+			//right
+			else if(event.keyCode == 39) {
+				window.open("../3035-Meeting-Room/index.html", "_top");
+			}
+			//up
+			else if (event.keyCode == 38) {
+				window.open(`../index.html?currentAlbum=Innovation-Area-II-Computers&currentPhoto=${currentPhoto}`, "_top");
+			}
+			//down
+			else if (event.keyCode == 40) {
+				let address = `${currentPhoto}/index.html`
+				window.open(address, "_top");
+			}
+		});
+	</script>
+	<table cellpadding="0" cellspacing="0" width="99%">
+		<tr valign='center'>
+			<td width="40%">
+					<a href='../Office-Areas/index.html'>(Prev) Office-Areas</a>
+			</td>
+
+			<td width="40%" valign=center>
+				
+				<h3 style="margin: 0;">
+					Navigation: <b><a href='../../index.html'>Collection</a>/<a href='../index.html'>TCB-Office-Areas</a>/Innovation-Area-II-Computers</b>
+				</h3>
+			</td>
+
+			<td width="25%" valign=center style="text-align: right;">
+				<a href='../3035-Meeting-Room/index.html'>3035-Meeting-Room (Next)</a>
+			</td>
+		</tr>
+	</table>
+	<table width="99%">
+		<tr>
+		<td style="text-align:center" valign='top' width='20%'>
+			<a class='clear' href='001/index.html'>
+				<img src='001/Innovation-Area-II-Computers-small.jpg' border='0' width='150' height='100'/><br/>
+				001
+			</a>
+		</td>
+		<td style="text-align:center" valign='top' width='20%'>
+			<a class='clear' href='002/index.html'>
+				<img src='002/Innovation-Area-II-Computers-small.jpg' border='0' width='150' height='100'/><br/>
+				002
+			</a>
+		</td>
+		<td style="text-align:center" valign='top' width='20%'>
+			<a class='clear' href='003/index.html'>
+				<img src='003/Innovation-Area-II-Computers-small.jpg' border='0' width='150' height='100'/><br/>
+				003
+			</a>
+		</td>
+		<td style="text-align:center" valign='top' width='20%'>
+			<a class='clear' href='004/index.html'>
+				<img src='004/Innovation-Area-II-Computers-small.jpg' border='0' width='150' height='100'/><br/>
+				004
+			</a>
+		</td>
+		<td style="text-align:center" valign='top' width='20%'>
+			<a class='clear' href='005/index.html'>
+				<img src='005/Innovation-Area-II-Computers-small.jpg' border='0' width='150' height='100'/><br/>
+				005
+			</a>
+		</td>
+		</tr>
+		<tr>
+		<td style="text-align:center" valign='top' width='20%'>
+			<a class='clear' href='006/index.html'>
+				<img src='006/Innovation-Area-II-Computers-small.jpg' border='0' width='150' height='100'/><br/>
+				006
+			</a>
+		</td>
+		<td style="text-align:center" valign='top' width='20%'>
+			<a class='clear' href='007/index.html'>
+				<img src='007/Innovation-Area-II-Computers-small.jpg' border='0' width='150' height='100'/><br/>
+				007
+			</a>
+		</td>
+		<td style="text-align:center" valign='top' width='20%'>
+			<a class='clear' href='008/index.html'>
+				<img src='008/Innovation-Area-II-Computers-small.jpg' border='0' width='150' height='100'/><br/>
+				008
+			</a>
+		</td>
+		<td style="text-align:center" valign='top' width='20%'>
+			<a class='clear' href='009/index.html'>
+				<img src='009/Innovation-Area-II-Computers-small.jpg' border='0' width='150' height='100'/><br/>
+				009
+			</a>
+		</td>
+		<td style="text-align:center" valign='top' width='20%'>
+			<a class='clear' href='010/index.html'>
+				<img src='010/Innovation-Area-II-Computers-small.jpg' border='0' width='150' height='100'/><br/>
+				010
+			</a>
+		</td>
+		</tr>
+		<tr>
+		<td style="text-align:center" valign='top' width='20%'>
+			<a class='clear' href='011/index.html'>
+				<img src='011/Innovation-Area-II-Computers-small.jpg' border='0' width='150' height='100'/><br/>
+				011
+			</a>
+		</td>
+
+  </table>
+</body>
+
+</html>

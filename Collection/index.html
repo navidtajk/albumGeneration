@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+  <h3>TCBG GALLERY</h3>
+  	<script>
+		const urlParams = new URLSearchParams(window.location.search);
+		const currentCollection = urlParams.get('currentCollection') ?? "Open-Houses";
+		const currentAlbum = urlParams.get('currentAlbum');
+    const currentPhoto = urlParams.get('currentPhoto') ?? "001";
+		document.addEventListener('keydown', function(event) {
+			//down
+			if (event.keyCode == 40) {
+				let address = `${currentCollection}/index.html?${currentAlbum != null ? `currentAlbum=${currentAlbum}` : ''}&currentPhoto=${currentPhoto}`;
+				window.open(address, "_top");
+			}
+		});
+	</script>
+	<table cellpadding="0" cellspacing="0" width="99%">
+		<tr valign='center'>
+			<td width="40%"></td>
+			<td width="40%" valign=center>
+				<h3 style="margin: 0">
+					Navigation: <b>Collection</b>
+				</h3>
+			</td>
+			<td width="40%"></td>
+		</tr>
+	</table>
+	<table width="99%">
+				<tr>
+		<td style="text-align:center" valign='top' width='20%'>
+			<a class='clear' href='Open-Houses/index.html'>
+				<img src='Open-Houses/2023-Open-House/001/2023-Open-House-small.jpg' border='0' width='150' height='100'/><br/>
+				Open-Houses
+			</a>
+			<p style="font-size: 75%; margin-top: 0;">5 albums, 27 images</p>		</td>
+		<td style="text-align:center" valign='top' width='20%'>
+			<a class='clear' href='TCB-Office-Areas/index.html'>
+				<img src='TCB-Office-Areas/Office-Areas/001/Office-Areas-small.jpg' border='0' width='150' height='100'/><br/>
+				TCB-Office-Areas
+			</a>
+			<p style="font-size: 75%; margin-top: 0;">3 albums, 48 images</p>		</td>
+		<td style="text-align:center" valign='top' width='20%'>
+			<a class='clear' href='Computational-Facility/index.html'>
+				<img src='Computational-Facility/Putuers/001/Putuers-small.jpg' border='0' width='150' height='100'/><br/>
+				Computational-Facility
+			</a>
+			<p style="font-size: 75%; margin-top: 0;">3 albums, 44 images</p>		</td>
+
+  </table>
+</body>
+
+</html>
