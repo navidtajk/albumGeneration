@@ -1,0 +1,27 @@
+	<script>
+		const urlParams = new URLSearchParams(window.location.search);
+		const currentCollection = urlParams.get('currentCollection') ?? "FIRST_COLLECTION";
+		const currentAlbum = urlParams.get('currentAlbum');
+    const currentPhoto = urlParams.get('currentPhoto') ?? "001";
+		document.addEventListener('keydown', function(event) {
+			//down
+			if (event.keyCode == 40) {
+				let address = `${currentCollection}/index.html?${currentAlbum != null ? `currentAlbum=${currentAlbum}` : ''}&currentPhoto=${currentPhoto}`;
+				window.open(address, "_top");
+			}
+		});
+	</script>
+	<table cellpadding="0" cellspacing="0" width="99%">
+		<tr valign='center'>
+			<td width="40%"></td>
+			<td width="40%" valign=center>
+				<h3 style="margin: 0">
+					Navigation: <b>CURRENT</b>
+				</h3>
+			</td>
+			<td width="40%"></td>
+		</tr>
+	</table>
+	<table width="99%">
+		THUMBNAILS
+  </table>

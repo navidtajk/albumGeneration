@@ -1,0 +1,44 @@
+	<script>
+		const urlParams = new URLSearchParams(window.location.search);
+		const currentPhoto = urlParams.get('currentPhoto') ?? "001";
+		document.addEventListener('keydown', function(event) {
+			//left
+			if(event.keyCode == 37) {
+				window.open("../PREVIOUS/index.html", "_top");
+			} 
+			//right
+			else if(event.keyCode == 39) {
+				window.open("../NEXT/index.html", "_top");
+			}
+			//up
+			else if (event.keyCode == 38) {
+				window.open(`../index.html?currentAlbum=CURRENT&currentPhoto=${currentPhoto}`, "_top");
+			}
+			//down
+			else if (event.keyCode == 40) {
+				let address = `${currentPhoto}/index.html`
+				window.open(address, "_top");
+			}
+		});
+	</script>
+	<table cellpadding="0" cellspacing="0" width="99%">
+		<tr valign='center'>
+			<td width="40%">
+					<a href='../PREVIOUS/index.html'>(Prev) PREVIOUS</a>
+			</td>
+
+			<td width="40%" valign=center>
+				
+				<h3 style="margin: 0;">
+					Navigation: <b><a href='../../index.html'>MASTER_NAME</a>/<a href='../index.html'>COLLECTION_NAME</a>/CURRENT</b>
+				</h3>
+			</td>
+
+			<td width="25%" valign=center style="text-align: right;">
+				<a href='../NEXT/index.html'>NEXT (Next)</a>
+			</td>
+		</tr>
+	</table>
+	<table width="99%">
+		THUMBNAILS
+  </table>

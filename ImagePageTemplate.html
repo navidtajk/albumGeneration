@@ -1,0 +1,39 @@
+
+	<script type='text/javascript'>
+		document.addEventListener('keydown', function(event) {
+			//left
+			if (event.keyCode == 37) {
+				window.open("../PREVIOUS/index.html", "_top");
+			}
+			//right
+			else if(event.keyCode == 39) {
+				window.open("../NEXT/index.html", "_top");
+			}
+			//up
+			else if (event.keyCode == 38) {
+				window.open("../index.html?currentPhoto=CURRENT", "_top");
+			}
+		});
+	</script>
+	<table cellpadding="0" cellspacing="0" width="99%">
+		<tr valign='center'>
+			<td width="40%">
+					<a href='../PREVIOUS/index.html'>(Prev) PREVIOUS</a>
+			</td>
+			<td width="40%" valign=center>
+				<h3 style="margin: 0;">
+					Navigation: <b><a href='../../../index.html'>MASTER_NAME</a>/<a href='../../index.html'>COLLECTION_NAME</a>/<a href='../index.html'>ALBUM_NAME</a>/CURRENT</b>
+				</h3>
+			</td>
+			<td width="20%" valign=center style="text-align: right;">
+				<a href='../NEXT/index.html'>NEXT (Next)</a>
+			</td>
+		</tr>
+	</table>
+	<div style="text-align: center">
+		<a class='clear' href='ALBUM_NAME-large.jpg'>
+			<img style="min-width:40%; max-width:100%; max-height:600px" src='ALBUM_NAME-large.jpg'/> </a>
+	</div>
+	<div style="text-align: center;">
+		DATE_STRING
+	</div>
