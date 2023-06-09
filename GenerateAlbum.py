@@ -1,12 +1,11 @@
 import os
 import shutil
 import sys
-from typing import Tuple
 from wand.image import Image
 
 months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
-def generateThumbnail(imageFile: str, saveFile: str, width: int, height: int) -> Tuple[str, str]:
+def generateThumbnail(imageFile: str, saveFile: str, width: int, height: int):
   """Generates a small version of the given image with the specified dimensions, and saved at the specified location. Also returns date information for the image."""
   with Image(filename=imageFile) as img:
     imageAspectRatio = img.width / img.height
@@ -24,7 +23,7 @@ def generateThumbnail(imageFile: str, saveFile: str, width: int, height: int) ->
     img.save(filename=saveFile)
     return img.metadata.get('exif:DateTimeOriginal')
 
-def processDateString(dateString: str) -> Tuple[int, int, int]:
+def processDateString(dateString: str):
   nums = list(map(int, dateString.split(':')))
   return nums[0], nums[1], nums[2]
 
@@ -55,7 +54,7 @@ def imageThumb(imageTitle, albumName):
         f"\t\t\t</a>\n"
         f"\t\t</td>\n")
 
-def getAlbumStats(albumFolder: str) -> Tuple[str, str, str]:
+def getAlbumStats(albumFolder: str):
   """Returns a tuple containing the number of images in the album, the start date, and the end date. The same return values as calling reloadAlbum, but without changin any files"""
   files = os.listdir(albumFolder)
   albumName = albumFolder.split('/')[-1]
@@ -80,7 +79,7 @@ def getAlbumStats(albumFolder: str) -> Tuple[str, str, str]:
           startDate = dateString
   return maxIndex, startDate, endDate
 
-def reloadAlbum(albumFolder: str, collectionName: str, masterName: str) -> Tuple[str, str, str]:
+def reloadAlbum(albumFolder: str, collectionName: str, masterName: str):
   """'Reloads' the album, regenerating the page for the album based on the existing subfolders. Returns a tuple containing the number of images in the album, the start date for the photos, and the end date"""
   files = os.listdir(albumFolder)
   albumName = albumFolder.split('/')[-1]

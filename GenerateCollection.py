@@ -10,7 +10,7 @@ def albumThumb(albumTitle, numPhotos, dateField):
             f"\t\t\t<p style=\"font-size: 75%; margin-top: 0;\">{numPhotos} image{'s' if numPhotos != 1 else ''}<br/>{dateField}</p>\n"
             f"\t\t</td>\n")
 
-def getCollectionStats(collectionPath: str) -> Tuple[int, int, str]:
+def getCollectionStats(collectionPath: str):
   """Returns a tuple containing the number of albums in the collection, the total number of photos, and the first album, respectively"""
   files = os.scandir(collectionPath)
   folders = list(filter(lambda x: x.is_dir(), files))
