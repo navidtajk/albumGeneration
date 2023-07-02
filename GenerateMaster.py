@@ -15,12 +15,12 @@ def reloadMaster(masterPageFolder: str, reloadCollections: str = True):
   folders = list(filter(lambda x: x.is_dir(), files))
   thumbnailHTML = ""
   for index, file in enumerate(folders):
-    previousTitle = folders[index - 1].name.replace(' ', '-')
-    currentTitle = folders[index].name.replace(' ', '-')
+    previousTitle = folders[index - 1].name.replace(' ', '_')
+    currentTitle = folders[index].name.replace(' ', '_')
     if index == len(folders) - 1:
-      nextTitle = folders[0].name.replace(' ', '-')
+      nextTitle = folders[0].name.replace(' ', '_')
     else:
-      nextTitle = folders[index + 1].name.replace(' ', '-')
+      nextTitle = folders[index + 1].name.replace(' ', '_')
     if reloadCollections:
       numAlbums, numPhotos, firstAlbum = reloadCollection(file.path, masterName)
     else:
@@ -49,7 +49,7 @@ def reloadMaster(masterPageFolder: str, reloadCollections: str = True):
       .replace("INNER_CONTENT", innerContent)
       .replace("THUMBNAILS", thumbnailHTML)
       .replace("CURRENT", masterName)
-      .replace("FIRST_COLLECTION", folders[0].name.replace(' ', '-'))
+      .replace("FIRST_COLLECTION", folders[0].name.replace(' ', '_'))
   )
   masterPagePath = f"{masterPageFolder}/index.html"
   with open(masterPagePath, "w") as f:
@@ -61,7 +61,7 @@ def generateMaster(collectionFolder, masterName, destination):
 
   os.mkdir(f"{destination}/{masterName}")
   for index, file in enumerate(folders):
-    current_title = folders[index].name.replace(' ', '-')
+    current_title = folders[index].name.replace(' ', '_')
     generateCollection(file.path, current_title, f"{destination}/{masterName}", masterName)
   return reloadMaster(f"{destination}/{masterName}")
   

@@ -4,28 +4,43 @@ import sys
 from wand.image import Image
 
 months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-
-def generateThumbnail(imageFile: str, saveFile: str, width: int, height: int):
-  """Generates a small version of the given image with the specified dimensions, and saved at the specified location. Also returns date information for the image."""
-  with Image(filename=imageFile) as img:
-    imageAspectRatio = img.width / img.height
-    finalAspectRatio = width / height
-    if imageAspectRatio == finalAspectRatio:
-      img.resize(width=width, height=height)
-    elif imageAspectRatio < finalAspectRatio:
-      img.resize(width=width, height=int(width/imageAspectRatio))
-      barHeight = int((img.height - height) / 2)
-      img.crop(top=barHeight, bottom=barHeight + height)
+validExtensions = set(['bpg', 'bmp,', 'bm', 'bmp3', 'cmyk', 'cmyka', 'gif', 'heic', 'jpeg', 'jpg', 'png', 'png8', 'png00', 'png24', 'png32', 'png48', 'png64', 'ppm', 'ps', 'psd', 'svg', 'tiff', 'tif', 'webp', 'tga', 'nef', 'cr2'])
+def generateThumbnails(imageFile: str, saveDirectory, smallImageName: str, largeImageName: str, originalImageName: str, smallWidth: int, smallHeight: int, largeHeight: int):
+  """Generates a small and medium version of the given image with the specified dimensions, and saved at the specified location. Returns a tuple containing the location of the original image and date information for the image (if it exists)."""
+  with Image(filename=imageFile) as image:
+    originalImageFilename = ""
+    imageAspectRatio = image.width / image.height
+    if image.height > largeHeight:
+      image.resize(width=int(largeHeight*imageAspectRatio), height=largeHeight)
+      originalImageFilename = f"{originalImageName}.{image.format.lower()}"
+      shutil.copy2(imageFile, f"{saveDirectory}/{originalImageFilename}")
+      image.format = 'JPEG'
+      image.save(filename=f"{saveDirectory}/{largeImageName}.jpg")
     else:
-      img.resize(width=int(height*imageAspectRatio), height=height)
-      barWidth = int((img.width - width) / 2)
-      img.crop(left=barWidth, right=barWidth + width)
-    img.save(filename=saveFile)
-    return img.metadata.get('exif:DateTimeOriginal')
+      originalImageFilename = f"{largeImageName}.jpg"
+      if image.format == 'JPEG':
+        shutil.copy2(imageFile, f"{saveDirectory}/{originalImageFilename}")
+      else:
+        image.format = 'JPEG'
+        image.save(filename=f"{saveDirectory}/{originalImageFilename}")
+    
+    finalAspectRatio = smallWidth / smallHeight
+    if imageAspectRatio == finalAspectRatio:
+      image.resize(width=smallWidth, height=smallHeight)
+    elif imageAspectRatio < finalAspectRatio:
+      image.resize(width=smallWidth, height=int(smallWidth/imageAspectRatio))
+      barHeight = int((image.height - smallHeight) / 2)
+      image.crop(top=barHeight, bottom=barHeight + smallHeight)
+    else:
+      image.resize(width=int(smallHeight*imageAspectRatio), height=smallHeight)
+      barWidth = int((image.width - smallWidth) / 2)
+      image.crop(left=barWidth, right=barWidth + smallWidth)
+    image.save(filename=f"{saveDirectory}/{smallImageName}.jpg")
+    return originalImageFilename, image.metadata.get('exif:DateTimeOriginal')
 
 def processDateString(dateString: str):
   nums = list(map(int, dateString.split(':')))
-  return nums[0], nums[1], nums[2]
+  return nums[0], nums[1] - 1, nums[2]
 
 def readableDateString(dateString):
   if dateString == "":
@@ -81,11 +96,12 @@ def getAlbumStats(albumFolder: str):
 
 def reloadAlbum(albumFolder: str, collectionName: str, masterName: str):
   """'Reloads' the album, regenerating the page for the album based on the existing subfolders. Returns a tuple containing the number of images in the album, the start date for the photos, and the end date"""
-  files = os.listdir(albumFolder)
+  files = os.scandir(albumFolder)
+  
   albumName = albumFolder.split('/')[-1]
   thumbnailHTML = "<tr>\n"
   # Subtract 1 because of index.html
-  maxIndex = len(files) - 1
+  maxIndex = len(list(filter(lambda x: x.is_dir(), files)))
   startDate = ""
   endDate = ""
   for index in range(1, maxIndex + 1):
@@ -115,7 +131,6 @@ def reloadAlbum(albumFolder: str, collectionName: str, masterName: str):
           endDate = dateString
         elif dateString < startDate:
           startDate = dateString
-    # write updated file contents back to file
     imagePagePath = f"{albumFolder}/{currentIndex}/index.html"
     with open(imagePagePath, "r") as f:
       imagePageContents = f.read()
@@ -130,6 +145,11 @@ def reloadAlbum(albumFolder: str, collectionName: str, masterName: str):
     albumPageContents = f.read()
   with open(f"AlbumPageTemplate.html", "r") as f:
     innerContents = f.read()
+  header = ""
+  headerPath = f"{albumFolder}/header.txt"
+  if os.path.exists(headerPath):
+    with open(headerPath) as f:
+      header = f.read()
   albumPageContents = (
     albumPageContents
       .replace("INNER_CONTENT", innerContents)
@@ -137,20 +157,30 @@ def reloadAlbum(albumFolder: str, collectionName: str, masterName: str):
       .replace("CURRENT", albumName)
       .replace("MASTER_NAME", masterName)
       .replace("COLLECTION_NAME", collectionName)
+      .replace("HEADER", header)
   )
 
   with open(f"{albumFolder}/index.html", "w") as f:
     f.write(albumPageContents)
-  return len(files), startDate, endDate
+  return maxIndex, startDate, endDate
+
+def validImage(file: os.DirEntry) -> bool:
+  # skip over hidden files and folders
+  if file.name[0] == '.' or not file.is_file:
+    return False
+  extension = file.name.split('.')[-1].lower()
+  return extension in validExtensions
 
 def generateAlbum(imageFolder, albumName, destination, masterName, collectionName):
   # get list of all files in current directory
-  files = os.listdir(imageFolder)
+  os.scandir(imageFolder)
+  files = os.scandir(imageFolder)
   # filter only for files that end in '.jpg'
-  jpg_files = list(filter(lambda x: x.endswith(".jpg") or x.endswith("JPG"), files))
+  jpgFiles = list(map(lambda x: x.name, filter(validImage, files)))
   os.mkdir(f"{destination}/{albumName}")
-  maxIndex = len(jpg_files)
-  for index, file_name in enumerate(jpg_files):
+  maxIndex = len(jpgFiles)
+  print(jpgFiles)
+  for index, filename in enumerate(jpgFiles):
     index += 1
     previousIndex = format(index - 1, '03d')
     currentIndex = format(index, '03d')
@@ -160,8 +190,8 @@ def generateAlbum(imageFolder, albumName, destination, masterName, collectionNam
     elif index == maxIndex:
       nextIndex = "001"
     os.mkdir(f"{destination}/{albumName}/{currentIndex}")
-    shutil.copy2(f"{imageFolder}/{file_name}", f"{destination}/{albumName}/{currentIndex}/{albumName}-large.jpg")
-    dateString = generateThumbnail(f"{imageFolder}/{file_name}", f"{destination}/{albumName}/{currentIndex}/{albumName}-small.jpg", 150, 100)
+    # shutil.copy2(f"{imageFolder}/{filename}", f"{destination}/{albumName}/{currentIndex}/{albumName}-large.jpg")
+    origialImageName, dateString = generateThumbnails(f"{imageFolder}/{filename}", f"{destination}/{albumName}/{currentIndex}", f"{albumName}-small", f"{albumName}-large", f"{albumName}-original", 150, 100, 600)
     if dateString is None:
       dateString = ""
     else:
@@ -180,10 +210,15 @@ def generateAlbum(imageFolder, albumName, destination, masterName, collectionNam
         .replace("COLLECTION_NAME", collectionName)
         .replace("ALBUM_NAME", albumName)
         .replace("DATE_STRING",  readableDateString(dateString))
+        .replace("ORIGINAL_IMAGE", origialImageName)
     )
     with open(f"{destination}/{albumName}/{currentIndex}/index.html", "w") as f:
       f.write(imagePageContents)
+  headerPath = f"{imageFolder}/header.txt"
+  if os.path.exists(headerPath):
+    with open(headerPath) as f:
+      shutil.copy2(headerPath, f"{destination}/{albumName}/header.txt")
   return reloadAlbum(f"{destination}/{albumName}", collectionName, masterName)
 
 if __name__ == "__main__":
-  generateAlbum("Open Houses/2023 Open House", "2023 Open House", ".", "dd", "dd")
+  generateAlbum("/Users/Navid/CleanPhotos/Research/Yi_Figures", "Test", ".", "dd", "dd")

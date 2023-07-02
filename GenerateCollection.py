@@ -30,12 +30,12 @@ def reloadCollection(collectionFolder: str, masterName: str, reloadAlbums: bool 
   folders.reverse()
   thumbnailHTML = ""
   for index in range(0, len(folders)):
-    previousTitle = folders[index - 1].name.replace(' ', '-')
-    currentTitle = folders[index].name.replace(' ', '-')
+    previousTitle = folders[index - 1].name.replace(' ', '_')
+    currentTitle = folders[index].name.replace(' ', '_')
     if index == len(folders) - 1:
-      nextTitle = folders[0].name.replace(' ', '-')
+      nextTitle = folders[0].name.replace(' ', '_')
     else:
-      nextTitle = folders[index + 1].name.replace(' ', '-')
+      nextTitle = folders[index + 1].name.replace(' ', '_')
     if reloadAlbums:
       numPhotos, startDate, endDate = reloadAlbum(f"{collectionFolder}/{currentTitle}", collectionName, masterName)
     else:
@@ -65,13 +65,13 @@ def reloadCollection(collectionFolder: str, masterName: str, reloadAlbums: bool 
       .replace("INNER_CONTENT", innerContent)
       .replace("THUMBNAILS", thumbnailHTML)
       .replace("CURRENT", collectionName)
-      .replace("FIRST_ALBUM", folders[0].name.replace(' ', '-'))
+      .replace("FIRST_ALBUM", folders[0].name.replace(' ', '_'))
       .replace("MASTER_NAME", masterName)
   )
   collectionPagePath = f"{collectionFolder}/index.html"
   with open(collectionPagePath, "w") as f:
     f.write(collectionPageContents)
-  return len(folders), totalPhotos, folders[0].name.replace(' ', '-')
+  return len(folders), totalPhotos, folders[0].name.replace(' ', '_')
 
 def generateCollection(collectionFolder, collectionName, destination, masterName):
   # get list of all files in current directory
@@ -81,7 +81,7 @@ def generateCollection(collectionFolder, collectionName, destination, masterName
   folders.reverse()
   os.mkdir(f"{destination}/{collectionName}")
   for index, file in enumerate(folders):
-    currentTitle = folders[index].name.replace(' ', '-')
+    currentTitle = folders[index].name.replace(' ', '_')
     generateAlbum(file.path, currentTitle, f"{destination}/{collectionName}", masterName, collectionName)
   return reloadCollection(f"{destination}/{collectionName}", masterName)
 
